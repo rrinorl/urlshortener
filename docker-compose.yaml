@@ -11,7 +11,7 @@ services:
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_DB: url_shortener
 
   url-shortner-service:
     build: .
@@ -20,7 +20,7 @@ services:
     ports:
       - "8080:8080"
     restart: always
-    command: sh -c "npm run migrate:dev &&gst npm start"
+    command: sh -c "npm run migrate:dev && npm start"
     environment:
       PORT: 8080
       NODE_ENV: development
