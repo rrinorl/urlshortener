@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/psql
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+
+  url-shortner-service:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    restart: always
+    command: sh -c "npm run migrate:dev &&gst npm start"
+    environment:
+      PORT: 8080
+      NODE_ENV: development
+      DATABASE_HOST: db
+      DATABASE_NAME: url_shortener
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: root
+
+volumes:
+  db_data: {}
