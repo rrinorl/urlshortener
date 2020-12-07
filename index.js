@@ -6,8 +6,9 @@ const cors = require('cors');
 const {Sequelize} = require('sequelize');
 const {nanoid} = require('nanoid');
 const {Url} = require('./models');
+require('dotenv').config()
 
-const sequelize = new Sequelize('postgres://postgres:root@localhost:5432/url_shortener');
+const sequelize = new Sequelize(process.env.DATABASE_URL);
 
 const port = process.env.PORT || 8080;
 
