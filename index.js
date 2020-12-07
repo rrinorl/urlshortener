@@ -13,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(morgan("short"));
 app.use(express.json());
+app.disable('x-powered-by');
 
 app.get('/', (req, res)=> res.send('hello world!'));
 app.post('/url', async (req, res) => {
@@ -29,6 +30,7 @@ app.post('/url', async (req, res) => {
     // TODO: save to DB
     res.status(201).json({created});
 });
+
 app.get('/:hash', async (req, res) =>{
     let hash = req.params.hash;
     let url = await Url.findOne({where: {hash}});
@@ -36,6 +38,7 @@ app.get('/:hash', async (req, res) =>{
     if(!url) return res.status(404).send("Not Found");
     res.redirect(url.url);
 });
+
 app.listen(port, ()=>{
     console.log(`Example app listening at http://localhost:${port}`);
 });
